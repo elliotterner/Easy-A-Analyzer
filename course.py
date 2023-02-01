@@ -15,8 +15,8 @@ class Course:
         """Adjusts the average letter grade distribution if a professor is found more than once within a data
         set."""
         self.count += 1
-        self.aperc = (self.aperc + new_aperc) / self.count
-        self.bperc = (self.bperc + new_bperc) / self.count
-        self.cperc = (self.cperc + new_cperc) / self.count
-        self.dperc = (self.dperc + new_dperc) / self.count
-        self.fperc = (self.fperc + new_fperc) / self.count
+        self.aperc = (self.aperc + new_aperc) / 2
+        self.bperc = (self.bperc + new_bperc) / 2
+        self.cperc = (self.cperc + new_cperc) / 2
+        self.dperc = (self.dperc + new_dperc) / 2
+        self.fperc = (self.fperc + new_fperc) / 2

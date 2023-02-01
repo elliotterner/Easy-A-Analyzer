@@ -1,5 +1,16 @@
 from tkinter import *
 
+# Create global filter options
+
+FacultyTypeGlobal = None
+ClassSearchTypeGlobal = None
+SearchPreferenceGlobal = None
+ClassCountGlobal = False
+
+FilterOptions = None
+
+
+#initialize tkinter window
 root = Tk()
 root.title("Easy A")
 root.geometry("1000x400")
@@ -16,32 +27,35 @@ Description = Label(root, text = """
 Description.place(relx=0.45, rely=0.3,anchor=CENTER)
 
 #filter functions
-
 def FacultySearchFunc(FacultyType):
-    print(FacultyType)
+    global FacultyTypeGlobal 
+    FacultyTypeGlobal= FacultyType
 
 def ClassSearchFunc(ClassSearchType):
-    print(ClassSearchType)
+    global ClassSearchTypeGlobal 
+    ClassSearchTypeGlobal = ClassSearchType
 
 def TypeofSearchFunc(SearchPreference):
-    print(SearchPreference)
+    global SearchPreferenceGlobal
+    SearchPreferenceGlobal = SearchPreference
 
 def ShowClassCountFunc():
-    print("class count working")
+    global ClassCountGlobal 
+    ClassCountGlobal = True
 
 # filter option labels:
 FacultyLabel = Label(root, text = "Select type of faculty for search: ")
 ClassSearchLabel = Label(root, text = "Select a type of class search:")
 TypeofSearch = Label(root, text = "Select Easy A or Just Pass:")
 ClassCountLabel = Label(root, text = "Class count:")
-AddNewDataLabel = Label(root, text = "Add new data:")
+
 
 # placing labels
 FacultyLabel.place(relx = .01, rely = .5, anchor= 'w')
 ClassSearchLabel.place(relx = .22, rely = .5, anchor= 'w')
 TypeofSearch.place(relx = .45, rely = .5, anchor= 'w')
 ClassCountLabel.place(relx = .66, rely = .5, anchor= 'w')
-AddNewDataLabel.place(relx = .80, rely = .5, anchor= 'w')
+
 
 # filter buttons
 FacultyButton1 = Button(root, text = "All instructors  ", command=lambda: FacultySearchFunc("All Instructors"))
@@ -71,12 +85,34 @@ TypeofSearchButton2.place(relx = .49, rely = .7, anchor= 'w')
 ShowClassCountButton.place(relx = .685, rely = .6, anchor= 'w')
 
 
-"""
-This section will be used to add new data points to our existing database,
-although I am not certain of how the data is currently being processed, so this
-section will be blank for now
-"""
-DataEntry = Entry(root, width=20, borderwidth=5, )
-DataEntry.place(relx = .80, rely = .6, anchor= 'w')
+
+# create list of filter options to pass to backend
+def combineFilters():
+    global FacultyTypeGlobal
+    global SearchPreferenceGlobal
+    global ClassSearchTypeGlobal
+
+    if FacultyTypeGlobal == None or SearchPreferenceGlobal == None or ClassSearchTypeGlobal == None:
+        print("The following filters have not been selected: ")
+        if FacultyTypeGlobal == None:
+            print("-- Faculty Type")
+        if  ClassSearchTypeGlobal == None:
+            print("-- Class Search Type")
+        if SearchPreferenceGlobal == None:
+            print("-- Search Type")
+
+        print("Please select these filters before executing\n")
+        return
+
+    global FilterOptions
+    FilterOptions = [FacultyTypeGlobal, ClassSearchTypeGlobal, SearchPreferenceGlobal, ClassCountGlobal]
+    print(FilterOptions)
+
+
+# Execute button creation
+ExecuteButton = Button(root, text = "Execute", command= combineFilters)
+ExecuteButton.place(relx = .8, rely = .5, anchor= 'w')
+
+
 
 root.mainloop()

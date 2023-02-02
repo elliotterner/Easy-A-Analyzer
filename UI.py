@@ -171,6 +171,8 @@ def Execute():
     global SearchPreferenceGlobal
     global ClassSearchTypeGlobal
 
+
+    # check to make sure all necessary filters are selected, if not, display which filters are missing
     if FacultyTypeGlobal == None or SearchPreferenceGlobal == None or ClassSearchTypeGlobal == None:
         print("The following filters have not been selected: ")
         if FacultyTypeGlobal == None:
@@ -183,6 +185,25 @@ def Execute():
         print("Please select these filters before executing\n")
         return
 
+    # check to make sure all sub-criteria is selected given that user has chosen the single class search option
+    if (ClassSearchTypeGlobal == "Single Class Search" and dep_selectedGlobal == None) or (ClassSearchTypeGlobal == "Single Class Search" and class_selectedGlobal == None):
+        print("Your search is not fully complete, please make sure you have confirmed the following: ")
+        if dep_selectedGlobal == None:
+            print('-- Department')
+        if class_selectedGlobal == None:
+            print('-- Individual class')
+        return
+
+    #check to make sure all sub criteria is selected given that user selects department search
+    if ClassSearchTypeGlobal == "Department Search" and dep_selectedGlobal == None:
+        print("Your search is not fully complete, please make sure you have confirmed the following: ")
+        print("-- Department")
+        return
+    #check to make sure all sub criteria has been selected given that user selects all classes within a certain level search
+    if ClassSearchTypeGlobal == "All Classes Within A Certain Level" and level_selectedGlobal == None:
+        print("Your search is not fully complete, please make sure you have confirmed the following: ")
+        print("-- Class level")
+        return
     global FilterOptions
 
     """

@@ -97,18 +97,24 @@ def search(key, dictionary, aperc, bperc, cperc, dperc, fperc):
         dictionary[key].adjust_percentages(aperc, bperc, cperc, dperc, fperc)
 
 
-def search_by_instructor(course):
+def search_by_instructor(course, faculty=False):
     """
     Breaks down professor grade distributions by the following depending on the following inputs:
         1.) A single class (such as 'MATH 111')
         2.) A single department (such as 'MATH')
         3.) All classes of a particular level within a department (such as 'Math 100-level' classes)
 
+    Faculty argument filters only data associated with faculty members that teach the course.
+
     Returns a list of Course object classes with names and corresponding grade distributions as members.
     """
     query = (f"SELECT *\n"
              f"FROM naturalsciences\n"
              f"WHERE course_name LIKE '{course}%'")
+
+    if faculty:  # # If faculty flag is set to True defined by user, then append MySQL query which filters only faculty members.
+        query += " AND faculty = 'FACULTY'"
+
     cursor.execute(query)
     data = cursor.fetchall()
 
@@ -126,10 +132,12 @@ def search_by_instructor(course):
     return list(instructors.values())
 
 
-def search_by_department_level(department):
+def search_by_department_level(department, faculty=False):
     """
     Breaks down grade distribution by a particular level within a department.
     Examples of valid inputs are: 'MATH400', 'CIS100', 'CH200'
+
+    Faculty argument filters only data associated with faculty members that teach the course.
 
     Returns a list of classes consisting of courses and their corresponding grade distributions as members.
     """
@@ -143,6 +151,10 @@ def search_by_department_level(department):
     query = (f"SELECT *\n"
              f"FROM naturalsciences\n"
              f"WHERE course_name LIKE '{dep_level}%'")
+
+    if faculty:  # If faculty flag is set to True defined by user, then append MySQL query which filters only faculty members.
+        query += " AND faculty = 'FACULTY'"
+
     cursor.execute(query)
     data = cursor.fetchall()
 
@@ -157,4 +169,4 @@ def search_by_department_level(department):
         fperc = course[7]
         search(course_name, courses, aperc, bperc, cperc, dperc, fperc)
 
-    return list(courses.values())
+    return courses.values()

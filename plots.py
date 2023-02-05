@@ -28,7 +28,7 @@ elif UI_list[1] == 'All Classes Within A Certain Level':
     search_query = UI_list[4] + UI_list[6]      
     class_list = database_functions.search_by_department_level(search_query, faculty_choice)
     class_list = list(class_list)               # dict object needs to casted to list for ease of use
-    graph_tile = 'All' + search_query + 'Level Classes'
+    graph_tile = 'All ' + search_query + ' Level Classes'
 # Somehow a different use-case was chosen
 else:
     print("Invalid selection.")

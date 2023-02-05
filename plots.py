@@ -1,9 +1,11 @@
 import matplotlib.pyplot as plt
 import database_functions
+import UI
 
 # The list returned by UI.py that stored the users selections
 # UI_list = ['Regular Faculty', 'All Classes Within A Certain Level', 'Easy A', True, 'CIS', None, '200']
-UI_list = ['All instructors', 'Single Class Search', 'Just Pass', True, 'CIS', 'MATH111', None]
+#UI_list = ['All instructors', 'Single Class Search', 'Just Pass', True, 'CIS', 'MATH111', None]
+UI_list = UI.FilterOptions
 
 ###############################################################################################################
 
@@ -13,25 +15,20 @@ faculty_choice = UI_list[0] == 'Regular Faculty'    # Does the user want all ins
 pass_choice = UI_list[2] == 'Easy A'                # Does the user want to see just A's OR D's and F's
 count_choice = UI_list[3] == True                   # Does the user want a class count
 
-
 # if looking for a specific class, like "MATH284"
 if UI_list[1] == 'Single Class Search':            
     class_list = database_functions.search_by_instructor(UI_list[5], faculty_choice)
     graph_tile = UI_list[5]
-    
 # if looking for the whole dept
 elif UI_list[1] == 'Department Search':             
     class_list = database_functions.search_by_instructor(UI_list[4], faculty_choice)
-    
-    graph_tile = 'All' + UI_list[4] + 'Classes'
+    graph_tile = 'All ' + UI_list[4] + ' Classes'
 # if looking for a specific dept level
 elif UI_list[1] == 'All Classes Within A Certain Level':
     search_query = UI_list[4] + UI_list[6]      
     class_list = database_functions.search_by_department_level(search_query, faculty_choice)
     class_list = list(class_list)               # dict object needs to casted to list for ease of use
     graph_tile = 'All' + search_query + 'Level Classes'
-    
-
 # Somehow a different use-case was chosen
 else:
     print("Invalid selection.")

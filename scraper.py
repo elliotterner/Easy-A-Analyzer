@@ -104,7 +104,6 @@ def mysql_filter(parsed_name):
     query = query[:-1]
     query += "';"
 
-    print(query)
     cursor.execute(query)
     cursor.execute("SET SQL_SAFE_UPDATES = 1")
     database.commit()

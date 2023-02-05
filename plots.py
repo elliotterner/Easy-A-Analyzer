@@ -18,11 +18,11 @@ count_choice = UI_list[3] == True                   # Does the user want a class
 if UI_list[1] == 'Single Class Search':            
     class_list = database_functions.search_by_instructor(UI_list[5], faculty_choice)
     graph_tile = UI_list[5]
-    print('Single class: ', UI_list[5])
+    
 # if looking for the whole dept
 elif UI_list[1] == 'Department Search':             
     class_list = database_functions.search_by_instructor(UI_list[4], faculty_choice)
-    print("The whole dept of: ", UI_list[4])
+    
     graph_tile = 'All' + UI_list[4] + 'Classes'
 # if looking for a specific dept level
 elif UI_list[1] == 'All Classes Within A Certain Level':
@@ -30,7 +30,7 @@ elif UI_list[1] == 'All Classes Within A Certain Level':
     class_list = database_functions.search_by_department_level(search_query, faculty_choice)
     class_list = list(class_list)               # dict object needs to casted to list for ease of use
     graph_tile = 'All' + search_query + 'Level Classes'
-    print('Specific dept lvl: ', search_query)
+    
 
 # Somehow a different use-case was chosen
 else:

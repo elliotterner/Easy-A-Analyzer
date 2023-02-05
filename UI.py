@@ -1,5 +1,6 @@
 from tkinter import *
 from database_functions import *
+from plots import graph
 
 # Create global variables
 
@@ -47,12 +48,14 @@ def ClassSearchFunc(ClassSearchType):
         # if single class search is selected, also update class variable to be passed to filter optionss
         if ClassSearchType == "Single Class Search":
             indiv_course_options = list_indiv_courses_within_department(dep_selectedGlobal)
+            
 
             #datatype of dropdown
             class_clicked = StringVar()
 
             #initial menu text
             class_clicked.set("Select a course")
+            
             def update_class_clicked():
                 global class_selectedGlobal
                 class_selectedGlobal = class_clicked.get()
@@ -63,10 +66,22 @@ def ClassSearchFunc(ClassSearchType):
 
             class_select_button = Button(root, text = "confirm", command = update_class_clicked).place(relx = .415, rely = .6, anchor= 'w') 
 
-    #sets level variable to be passed into filter options
-    def update_level_clicked():
-        global level_selectedGlobal
-        level_selectedGlobal = level_clicked.get()
+        if ClassSearchType == "All Classes Within A Certain Level":
+            
+            #sets level variable to be passed into filter options
+            def update_level_clicked():
+                global level_selectedGlobal
+                level_selectedGlobal = level_clicked.get()
+
+            levelOptions = ["100","200","300", "400", "500", "600"]
+            level_clicked = StringVar()
+            level_clicked.set("Select a level")
+
+            level_DD = OptionMenu(root, level_clicked, *levelOptions)
+            level_DD.place(relx = .415, rely = .55, anchor= 'w')
+
+            level_select_button = Button(root, text = "confirm", command = update_level_clicked).place(relx = .415, rely = .6, anchor= 'w')
+
     
     if ClassSearchType == "Single Class Search":
         classOptions = list_departments()
@@ -75,7 +90,7 @@ def ClassSearchFunc(ClassSearchType):
         dep_clicked = StringVar()
 
         #initial menu text
-        dep_clicked.set("Select department")
+        dep_clicked.set("Select Department")
 
         #create dropdown menu
         department_DD = OptionMenu(root, dep_clicked, *classOptions)
@@ -101,15 +116,20 @@ def ClassSearchFunc(ClassSearchType):
 
 
     if ClassSearchType == "All Classes Within A Certain Level":
-        levelOptions = ["100","200","300", "400", "500", "600"]
-        level_clicked = StringVar()
-        level_clicked.set("Select a course level")
+        classOptions = list_departments()
 
-        level_DD = OptionMenu(root, level_clicked, *levelOptions)
-        level_DD.place(relx = .35, rely = .55, anchor= 'w')
+        #datatype of dropdown text
+        dep_clicked = StringVar()
 
-        level_select_button = Button(root, text = "confirm", command = update_level_clicked).place(relx = .35, rely = .6, anchor= 'w')
+        #initial menu text
+        dep_clicked.set("Select Department")
 
+        #create dropdown menu
+        department_DD = OptionMenu(root, dep_clicked, *classOptions)
+        department_DD.place(relx = .35, rely = .55, anchor= 'w')
+        
+        dep_select_button = Button(root, text = "confirm", command = update_dep_clicked).place(relx = .35, rely = .6, anchor= 'w')
+    
     global ClassSearchTypeGlobal 
     ClassSearchTypeGlobal = ClassSearchType
 
@@ -200,9 +220,12 @@ def Execute():
         print("-- Department")
         return
     #check to make sure all sub criteria has been selected given that user selects all classes within a certain level search
-    if ClassSearchTypeGlobal == "All Classes Within A Certain Level" and level_selectedGlobal == None:
+    if ClassSearchTypeGlobal == "All Classes Within A Certain Level" and level_selectedGlobal == None or dep_selectedGlobal == None:
         print("Your search is not fully complete, please make sure you have confirmed the following: ")
-        print("-- Class level")
+        if level_selectedGlobal == None:
+            print("-- Class level")
+        if dep_selectedGlobal == None:
+            print("-- Department")
         return
     global FilterOptions
 
@@ -227,10 +250,13 @@ def Execute():
 
     FilterOptions = [FacultyTypeGlobal, ClassSearchTypeGlobal, SearchPreferenceGlobal, ClassCountGlobal,dep_selectedGlobal, class_selectedGlobal, level_selectedGlobal]
     print(FilterOptions)
+    graph(FilterOptions)
 
 
 
 
+
+#
 # Execute button creation
 ExecuteButton = Button(root, text = "Execute", command= Execute)
 ExecuteButton.place(relx = .8, rely = .5, anchor= 'w')

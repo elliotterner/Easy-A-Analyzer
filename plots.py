@@ -61,12 +61,13 @@ def graph(UI_list):
     fig, axs  = plt.subplots(1, 2)           # create subplot with 1 row, 2 cols
     font = {'family': 'sans-serif', 'size': 16, 'weight': 'bold'}
     bar_width = 0.4
+    x_label = "Classes" if UI_list[1] == 'All Classes Within A Certain Level' else "Instructors"
 
     # Data for Graph 1
     bars = axs[0].bar(x_axis_list, aperc_list, bar_width)
     axs[0].bar_label(bars)
     axs[0].set_ylabel("Easy A: % As")
-    axs[0].set_xlabel("Instructors")
+    axs[0].set_xlabel(x_label)
     axs[0].set_title(graph_tile, fontdict=font)
     axs[0].set_ylim(0, 100)
     axs[0].set_xlim(-1, 9)
@@ -78,7 +79,7 @@ def graph(UI_list):
     bars = axs[1].bar(x_axis_list, dfperc_list, bar_width)
     axs[1].bar_label(bars)
     axs[1].set_ylabel("Just Pass: % Ds and Fs")
-    axs[1].set_xlabel("Instructors")
+    axs[1].set_xlabel(x_label)
     axs[1].set_title(graph_tile, fontdict=font)
     axs[1].set_ylim(0, 100)
     axs[1].set_xlim(-1, 9)

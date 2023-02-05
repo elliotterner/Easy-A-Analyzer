@@ -89,6 +89,8 @@ def list_indiv_courses_within_department(department):
         if course_name not in courses:  # If course not already in course list then append to it.
             courses.append(course_name)
 
+    return courses
+
 
 def search(key, dictionary, aperc, bperc, cperc, dperc, fperc):
     if key not in dictionary:

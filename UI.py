@@ -1,5 +1,6 @@
 from tkinter import *
 from database_functions import *
+from plots import graph
 
 # Create global variables
 
@@ -47,6 +48,7 @@ def ClassSearchFunc(ClassSearchType):
         # if single class search is selected, also update class variable to be passed to filter optionss
         if ClassSearchType == "Single Class Search":
             indiv_course_options = list_indiv_courses_within_department(dep_selectedGlobal)
+            
 
             #datatype of dropdown
             class_clicked = StringVar()
@@ -75,7 +77,7 @@ def ClassSearchFunc(ClassSearchType):
         dep_clicked = StringVar()
 
         #initial menu text
-        dep_clicked.set("Select department")
+        dep_clicked.set("Select Department")
 
         #create dropdown menu
         department_DD = OptionMenu(root, dep_clicked, *classOptions)
@@ -227,10 +229,13 @@ def Execute():
 
     FilterOptions = [FacultyTypeGlobal, ClassSearchTypeGlobal, SearchPreferenceGlobal, ClassCountGlobal,dep_selectedGlobal, class_selectedGlobal, level_selectedGlobal]
     print(FilterOptions)
+    graph(FilterOptions)
 
 
 
 
+
+#
 # Execute button creation
 ExecuteButton = Button(root, text = "Execute", command= Execute)
 ExecuteButton.place(relx = .8, rely = .5, anchor= 'w')

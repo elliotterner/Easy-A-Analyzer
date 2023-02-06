@@ -1,3 +1,13 @@
+"""
+File Name: database_functions.py
+Program Name: Easy A
+File purpose: This file fetches data from the MySQL database given a user's specifications. It also contains
+    functions which return a list of department options, course level options and individual course level options
+    that a user may choose from in the user interface.
+Creation date: Jan 15, 2023
+Initial Authors: Patrick Rodriguez
+"""
+
 import mysql.connector
 from course import Course
 
@@ -93,6 +103,11 @@ def list_indiv_courses_within_department(department):
 
 
 def search(key, dictionary, aperc, bperc, cperc, dperc, fperc):
+    """
+    Checks if a key exists within a given dictionary.
+    If it doesn't exist then a new Course class object is initialized and mapped to the new key.
+    Otherwise, it calls Course.adjust_percentages and modifies the average letter grade distribution.
+    """
     if key not in dictionary:
         dictionary[key] = Course(key, aperc, bperc, cperc, dperc, fperc)
     else:
@@ -114,7 +129,7 @@ def search_by_instructor(course, faculty=False):
              f"FROM naturalsciences\n"
              f"WHERE course_name LIKE '{course}%'")
 
-    if faculty:  # # If faculty flag is set to True defined by user, then append MySQL query which filters only faculty members.
+    if faculty:  # If faculty flag is set to True defined by user, then append MySQL query which filters only faculty members.
         query += " AND faculty = 'FACULTY'"
 
     cursor.execute(query)
@@ -144,6 +159,7 @@ def search_by_department_level(department, faculty=False):
     Returns a list of classes consisting of courses and their corresponding grade distributions as members.
     """
 
+    #  Get only the department and first number to indicate the level.
     dep_level = ''
     for char in department:
         dep_level += char

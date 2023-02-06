@@ -1,3 +1,12 @@
+"""
+File Name: course.py
+Program Name: Easy A
+File purpose: This file contains the class Course and its methods. It is used primarily by
+    database_functions.py to create and adjust a list of Course objects which will then be used
+    by plots.py to create appropriate plots given a user's specifications.
+Creation date: Jan 15, 2023
+Initial Authors: Patrick Rodriguez
+"""
 class Course:
     """Initially class was named 'Professor' but realized I could use the functions when filtering by class level.
     Therefore renamed to Course.py"""

@@ -1,9 +1,12 @@
+"""
+Author: Bermudez, Jan
+Last Modified: 02/05/2023
+Description: A bar graph creation module using matplotlib and data received from database_functions.py
+"""
 import matplotlib.pyplot as plt
 import database_functions
 
-# The list returned by UI.py that stored the users selections
-# UI_list = ['Regular Faculty', 'All Classes Within A Certain Level', 'Easy A', True, 'CIS', None, '200']
-#UI_list = ['All instructors', 'Single Class Search', 'Just Pass', True, 'CIS', 'MATH111', None]
+
 def graph(UI_list):
 
     ###############################################################################################################
@@ -64,16 +67,16 @@ def graph(UI_list):
     x_label = "Classes" if UI_list[1] == 'All Classes Within A Certain Level' else "Instructors"
 
     # Data for Graph 1
-    bars = axs[0].bar(x_axis_list, aperc_list, bar_width)
+    bars = axs[0].bar(x_axis_list, aperc_list, bar_width)       # creates the bar graph with x, y, and specified bar width
     axs[0].bar_label(bars)
     axs[0].set_ylabel("Easy A: % As")
     axs[0].set_xlabel(x_label)
     axs[0].set_title(graph_tile, fontdict=font)
-    axs[0].set_ylim(0, 100)
-    axs[0].set_xlim(-1, 9)
-    axs[0].grid(True)
-    axs[0].xaxis.grid(False)
-    axs[0].set_xticklabels(x_axis_list, rotation=90)
+    axs[0].set_ylim(0, 100)                                     # sets the limit of the y-axis to [0, 100]
+    axs[0].set_xlim(-1, 9)                                      # limit starts at -1 to allow padding to the left of the first bar
+    axs[0].grid(True)                                           # allows graph to form uniformly in grid pattern
+    axs[0].xaxis.grid(False)                                    # removes excessive horizontal grid lines
+    axs[0].set_xticklabels(x_axis_list, rotation=90)            # adds labels underneath each bar, rotating them sideways
 
     #Data for Graph 2
     bars = axs[1].bar(x_axis_list, dfperc_list, bar_width)
@@ -88,8 +91,6 @@ def graph(UI_list):
     axs[1].set_xticklabels(x_axis_list, rotation=90)
 
     # # Graph Output
-    #fig.autofmt_xdate()    # second method to rotate x-axis labels
     plt.tight_layout()
     plt.show()
 
-    #plt.savefig("results.png") saves as png to directory

@@ -1,3 +1,13 @@
+"""
+Author: Elliot Terner
+Last modified: 2/5/2023
+description:
+This program is the user interface for the easy A system. It takes user input through a series 
+of buttons and drop down menus. Once all of the required filters have been selected, the filters
+will be stored in a list that will be passed into the graphical display function which is found in 
+plot.py. From there the display will open in a new window
+"""
+
 from tkinter import *
 from database_functions import *
 from plots import graph
